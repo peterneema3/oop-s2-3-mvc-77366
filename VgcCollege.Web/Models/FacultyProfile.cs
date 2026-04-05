@@ -1,6 +1,25 @@
-﻿namespace VgcCollege.Web.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace VgcCollege.Web.Models
 {
     public class FacultyProfile
     {
+        public int Id { get; set; }
+
+        [Required]
+        public string IdentityUserId { get; set; } = string.Empty;
+
+        [Required]
+        [StringLength(100)]
+        public string Name { get; set; } = string.Empty;
+
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; } = string.Empty;
+
+        [Phone]
+        public string? Phone { get; set; }
+
+        public ICollection<FacultyCourse> FacultyCourses { get; set; } = new List<FacultyCourse>();
     }
 }
