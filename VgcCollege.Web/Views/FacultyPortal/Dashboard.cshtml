@@ -1,0 +1,23 @@
+﻿@{
+    ViewData["Title"] = "Faculty Dashboard";
+    var courses = ViewBag.Courses as IEnumerable<VgcCollege.Web.Models.Course>;
+    var enrolments = ViewBag.Enrolments as IEnumerable<VgcCollege.Web.Models.CourseEnrolment>;
+}
+
+<h2>Faculty Dashboard</h2>
+
+<h3>Assigned Courses</h3>
+<ul>
+    @foreach (var c in courses!)
+    {
+        <li>@c.Name</li>
+    }
+</ul>
+
+<h3>My Students</h3>
+<ul>
+    @foreach (var e in enrolments!)
+    {
+        <li>@e.StudentProfile!.Name - @e.Course!.Name</li>
+    }
+</ul>

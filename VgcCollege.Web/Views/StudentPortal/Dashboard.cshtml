@@ -1,0 +1,37 @@
+﻿@{
+    ViewData["Title"] = "Student Dashboard";
+    var student = ViewBag.Student;
+    var enrolments = ViewBag.Enrolments as IEnumerable<VgcCollege.Web.Models.CourseEnrolment>;
+    var assignmentResults = ViewBag.AssignmentResults as IEnumerable<VgcCollege.Web.Models.AssignmentResult>;
+    var examResults = ViewBag.ExamResults as IEnumerable<VgcCollege.Web.Models.ExamResult>;
+}
+
+<h2>Student Dashboard</h2>
+
+<h4>@student.Name</h4>
+<p>Email: @student.Email</p>
+<p>Student Number: @student.StudentNumber</p>
+
+<h3>My Enrolments</h3>
+<ul>
+    @foreach (var e in enrolments!)
+    {
+        <li>@e.Course!.Name - @e.Status</li>
+    }
+</ul>
+
+<h3>My Assignment Results</h3>
+<ul>
+    @foreach (var r in assignmentResults!)
+    {
+        <li>@r.Assignment!.Title - @r.Score</li>
+    }
+</ul>
+
+<h3>My Released Exam Results</h3>
+<ul>
+    @foreach (var r in examResults!)
+    {
+        <li>@r.Exam!.Title - @r.Score (@r.Grade)</li>
+    }
+</ul>
