@@ -1,29 +1,27 @@
-name: ci
+# VgcCollege
 
-on:
-  push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
+ASP.NET Core MVC application for managing branches, courses, students, faculty, enrolments, attendance, assignments, and exams.
 
-jobs:
-  build-and-test:
-    runs-on: ubuntu-latest
+## Tech Stack
+- ASP.NET Core MVC
+- Entity Framework Core
+- SQLite
+- ASP.NET Core Identity
+- xUnit
+- GitHub Actions
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+## How to Run
+1. Open the solution in Visual Studio
+2. Run:
+   Update-Database
+3. Press F5
 
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: "8.0.x"
+## Seeded Accounts
+- Admin: admin@vgc.com / Password1!
+- Faculty: faculty@vgc.com / Password1!
+- Student 1: student1@vgc.com / Password1!
+- Student 2: student2@vgc.com / Password1!
 
-      - name: Restore
-        run: dotnet restore
-
-      - name: Build (Release)
-        run: dotnet build --configuration Release --no-restore
-
-      - name: Test with coverage
-        run: dotnet test --configuration Release --no-build --collect:"XPlat Code Coverage" --verbosity normal
+## How to Run Tests
+```bash
+dotnet test
