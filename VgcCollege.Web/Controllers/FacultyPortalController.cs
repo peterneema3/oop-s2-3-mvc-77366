@@ -17,12 +17,16 @@ namespace VgcCollege.Web.Controllers
 
         public async Task<IActionResult> Dashboard()
         {
-            var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value!;
+            var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+
+            if (string.IsNullOrEmpty(userId))
+                return Challenge();
 
             var faculty = await _context.FacultyProfiles
                 .FirstOrDefaultAsync(f => f.IdentityUserId == userId);
 
-            if (faculty == null) return NotFound();
+            if (faculty == null)
+                return NotFound();
 
             var courseIds = await _context.FacultyCourses
                 .Where(fc => fc.FacultyProfileId == faculty.Id)

@@ -1,37 +1,87 @@
-﻿@{
+﻿@using VgcCollege.Web.Models
+@{
     ViewData["Title"] = "Student Dashboard";
-    var student = ViewBag.Student;
-    var enrolments = ViewBag.Enrolments as IEnumerable<VgcCollege.Web.Models.CourseEnrolment>;
-    var assignmentResults = ViewBag.AssignmentResults as IEnumerable<VgcCollege.Web.Models.AssignmentResult>;
-    var examResults = ViewBag.ExamResults as IEnumerable<VgcCollege.Web.Models.ExamResult>;
+
+    var student = ViewBag.Student as StudentProfile;
+    var enrolments = ViewBag.Enrolments as IEnumerable<CourseEnrolment>;
+    var assignmentResults = ViewBag.AssignmentResults as IEnumerable<AssignmentResult>;
+    var examResults = ViewBag.ExamResults as IEnumerable<ExamResult>;
 }
 
 <h2>Student Dashboard</h2>
 
-<h4>@student.Name</h4>
-<p>Email: @student.Email</p>
-<p>Student Number: @student.StudentNumber</p>
+@if (student != null)
+{
+    <div class="card mb-4">
+        <div class="card-body">
+            <h4>@student.Name</h4>
+            <p><strong>Email:</strong> @student.Email</p>
+            <p><strong>Student Number:</strong> @student.StudentNumber</p>
+            <p><strong>Phone:</strong> @student.Phone</p>
+            <p><strong>Address:</strong> @student.Address</p>
+        </div>
+    </div>
+}
 
 <h3>My Enrolments</h3>
-<ul>
-    @foreach (var e in enrolments!)
-    {
-        <li>@e.Course!.Name - @e.Status</li>
-    }
-</ul>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Course</th>
+            <th>Status</th>
+            <th>Enrol Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in enrolments ?? Enumerable.Empty<CourseEnrolment>())
+        {
+            <tr>
+                <td>@item.Course?.Name</td>
+                <td>@item.Status</td>
+                <td>@item.EnrolDate.ToShortDateString()</td>
+            </tr>
+        }
+    </tbody>
+</table>
 
 <h3>My Assignment Results</h3>
-<ul>
-    @foreach (var r in assignmentResults!)
-    {
-        <li>@r.Assignment!.Title - @r.Score</li>
-    }
-</ul>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Assignment</th>
+            <th>Score</th>
+            <th>Feedback</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in assignmentResults ?? Enumerable.Empty<AssignmentResult>())
+        {
+            <tr>
+                <td>@item.Assignment?.Title</td>
+                <td>@item.Score</td>
+                <td>@item.Feedback</td>
+            </tr>
+        }
+    </tbody>
+</table>
 
 <h3>My Released Exam Results</h3>
-<ul>
-    @foreach (var r in examResults!)
-    {
-        <li>@r.Exam!.Title - @r.Score (@r.Grade)</li>
-    }
-</ul>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Exam</th>
+            <th>Score</th>
+            <th>Grade</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in examResults ?? Enumerable.Empty<ExamResult>())
+        {
+            <tr>
+                <td>@item.Exam?.Title</td>
+                <td>@item.Score</td>
+                <td>@item.Grade</td>
+            </tr>
+        }
+    </tbody>
+</table>

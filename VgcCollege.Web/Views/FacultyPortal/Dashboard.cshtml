@@ -1,23 +1,51 @@
-﻿@{
+﻿@using VgcCollege.Web.Models
+@{
     ViewData["Title"] = "Faculty Dashboard";
-    var courses = ViewBag.Courses as IEnumerable<VgcCollege.Web.Models.Course>;
-    var enrolments = ViewBag.Enrolments as IEnumerable<VgcCollege.Web.Models.CourseEnrolment>;
+
+    var courses = ViewBag.Courses as IEnumerable<Course>;
+    var enrolments = ViewBag.Enrolments as IEnumerable<CourseEnrolment>;
 }
 
 <h2>Faculty Dashboard</h2>
 
 <h3>Assigned Courses</h3>
-<ul>
-    @foreach (var c in courses!)
-    {
-        <li>@c.Name</li>
-    }
-</ul>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Course</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in courses ?? Enumerable.Empty<Course>())
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.StartDate.ToShortDateString()</td>
+                <td>@item.EndDate.ToShortDateString()</td>
+            </tr>
+        }
+    </tbody>
+</table>
 
-<h3>My Students</h3>
-<ul>
-    @foreach (var e in enrolments!)
-    {
-        <li>@e.StudentProfile!.Name - @e.Course!.Name</li>
-    }
-</ul>
+<h3>Students In My Courses</h3>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Student</th>
+            <th>Course</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in enrolments ?? Enumerable.Empty<CourseEnrolment>())
+        {
+            <tr>
+                <td>@item.StudentProfile?.Name</td>
+                <td>@item.Course?.Name</td>
+                <td>@item.Status</td>
+            </tr>
+        }
+    </tbody>
+</table>

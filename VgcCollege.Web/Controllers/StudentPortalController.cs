@@ -17,12 +17,16 @@ namespace VgcCollege.Web.Controllers
 
         public async Task<IActionResult> Dashboard()
         {
-            var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value!;
+            var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+
+            if (string.IsNullOrEmpty(userId))
+                return Challenge();
 
             var student = await _context.StudentProfiles
                 .FirstOrDefaultAsync(s => s.IdentityUserId == userId);
 
-            if (student == null) return NotFound();
+            if (student == null)
+                return NotFound();
 
             ViewBag.Student = student;
 
@@ -38,7 +42,7 @@ namespace VgcCollege.Web.Controllers
 
             ViewBag.ExamResults = await _context.ExamResults
                 .Include(r => r.Exam)
-                .Where(r => r.StudentProfileId == student.Id && r.Exam!.ResultsReleased)
+                .Where(r => r.StudentProfileId == student.Id && r.Exam != null && r.Exam.ResultsReleased)
                 .ToListAsync();
 
             return View();

@@ -1,0 +1,40 @@
+﻿@model VgcCollege.Web.Models.AssignmentResult
+
+@{
+    ViewData["Title"] = "Create Assignment Result";
+}
+
+<h2>Create Assignment Result</h2>
+
+<form asp-action="Create" method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div class="mb-3">
+        <label asp-for="AssignmentId" class="form-label"></label>
+        <select asp-for="AssignmentId" class="form-select" asp-items="ViewBag.AssignmentId"></select>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="StudentProfileId" class="form-label"></label>
+        <select asp-for="StudentProfileId" class="form-select" asp-items="ViewBag.StudentProfileId"></select>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Score" class="form-label"></label>
+        <input asp-for="Score" class="form-control" />
+        <span asp-validation-for="Score" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Feedback" class="form-label"></label>
+        <textarea asp-for="Feedback" class="form-control"></textarea>
+        <span asp-validation-for="Feedback" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-success">Save</button>
+    <a asp-action="Index" class="btn btn-secondary">Back</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
